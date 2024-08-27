@@ -16,7 +16,7 @@ jobs:
         run: zip -r deploy-build.zip . -x '*.git*'
 
       - name: Deploy to EB
-        run: einaregilsson/beanstal-deploy@21
+        uses: einaregilsson/beanstal-deploy@21
         with:
           aws_access_key: ${{secrets.AWS_ACESS_KEY}}
           aws_secret_key: ${{}}
