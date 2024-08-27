@@ -16,7 +16,7 @@ jobs:
         run: zip -r deploy-build.zip . -x '*.git*'
 
       - name: Deploy to EB
-        uses: einaregilsson/beanstal-deploy@21
+        uses: einaregilsson/beanstalk-deploy@v21
         with:
           #  To generate access keys creatte iam user which create keys to be used by external apps
           aws_access_key: ${{secrets.AWS_ACESS_KEY}}
