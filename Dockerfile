@@ -13,5 +13,9 @@ RUN npm run build
 
 FROM nginx
 
+# This means in production, the vms need to expose this port
+# which is exposed by elastic beanstalk.
+EXPOSE 80
+
 COPY --from=builder /example_app/build  /usr/share/nginx/html
 
