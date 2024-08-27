@@ -1,0 +1,24 @@
+version: '3'
+services:
+  react-app:
+    build:
+      # Where do we want the content to be copied from.
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3000:3000'
+    volumes:
+      # bookmark volumes
+      - /user/example_app/node_modules
+      # volumes to get reference to our working directory
+      - ./:/user/example_app
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /user/example_app/node_modules
+      - ./:/user/example_app
+    #  override the start command
+    command: ['npm', 'run', 'test']

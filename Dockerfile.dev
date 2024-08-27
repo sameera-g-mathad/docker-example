@@ -1,0 +1,19 @@
+# only use in development
+# Also uninstall node-modules
+
+
+FROM node:16-alpine
+
+WORKDIR /user/example_app
+
+COPY ./package.json ./
+
+RUN npm install
+
+# copies everything from our working dir to example_app
+# Should be present even if you mention volumes in docker-compose as it is not used for deployment,
+# even though this is not a production file, still helps for practice.
+COPY ./ ./  
+
+
+CMD [ "npm", "run", "start" ]
