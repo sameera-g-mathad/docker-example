@@ -1,0 +1,28 @@
+name: Deploy Frontend
+on:
+  push:
+    branches:
+      - main # could be 'master' as well
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      - run: docker build -t sameer/react-test .
+      - run: docker run -e CI=true sameer/react-test npm run test
+
+      - name: Generate deployment package
+        run: zip -r deploy-build.zip . -x '*.git*'
+
+      - name: Deploy to EB
+        run: einaregilsson/beanstal-deploy@21
+        with:
+          aws_access_key: ${{secrets.AWS_ACESS_KEY}}
+          aws_secret_key: ${{}}
+          application_name:
+          environment_name:
+          existing_bucket_name:
+          region:
+          version_label: ${{ github.sha }}
+          deployment_package: deploy-build.zip
